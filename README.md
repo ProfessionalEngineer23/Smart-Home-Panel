@@ -1,6 +1,6 @@
 ### Smart Home Panel
 
-![alt text](image-1.png)
+![alt text](images/SmartPanelRev1.png)
 
 # This is a Smart Home Panel device that measures room conditions like temperature, humidity, pressure, light levels, air quality and human presence. 
 
@@ -37,7 +37,10 @@ An Amazon Alexa is acts as a controller, meaning that it accepts wifi commands a
 
 Future work includes updating the LVGL UI with user wifi and password entry, updating the firmware on both smart panel processors to make the Esp32S3 communicate with the Esp32H2 coprocessor via UART. The Esp32H2 will interpret the sensor data for sending to Smart Home applications via Thread. The current hardware supports this, however due to time constraints this was put aside for now.  
 
+# Enclosures Desings
 
+![alt text](images/Smart_Panel_Enclosure.png)
 
+![alt text](images/Light_OTBR_Enclosure.png)
 
 
