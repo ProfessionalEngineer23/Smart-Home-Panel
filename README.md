@@ -55,7 +55,7 @@ A **Thread Border Router** connects Thread devices to the wider network, such as
 
 ### Do I need Amazon Alexa for Thread or Matter?
 
-Amazon Alexa is not required, but it can act as a **Matter controller**. A Matter controller is used to commission and control Matter devices. In this project, Alexa was used because it provided a practical way to test that the ESP32-H2 Matter light device could be commissioned and controlled successfully.
+Amazon Alexa is not required, but it can act as a **Matter controller**. A Matter controller is used to commission and control Matter devices. In this project, Alexa was used because it provided a practical way to test the ESP32-H2 Matter light device. Alternatives include Google Home, Apple Home, SmartThings, a Raspberry Pi running Matter controller software, or ESP32 Matter controller examples.
 
 ---
 
