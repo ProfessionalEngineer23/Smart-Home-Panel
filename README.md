@@ -174,7 +174,7 @@ The Matter subsystem currently works as a separate demonstration. Full communica
 
 <img width="1292" height="916" alt="image" src="https://github.com/user-attachments/assets/1390bd56-32ba-431b-892c-bc66b8cec42b" />
 
-<img width="522" height="362" alt="image" src="https://github.com/user-attachments/assets/00727843-fd7e-4299-ba27-825f9a194aaa" />
+<img width="1292" height="916" alt="image" src="https://github.com/user-attachments/assets/00727843-fd7e-4299-ba27-825f9a194aaa" />
 
 A custom PCB was designed to connect the ESP32-S3, sensors, display, buzzer, buck converter power circuitry, and expansion headers.
 
