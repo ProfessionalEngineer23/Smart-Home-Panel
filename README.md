@@ -2,11 +2,15 @@
 
 ![Smart Home Panel Prototype](images/SmartPanelRev1.png)
 
-## Overview
+## Problem Statement and Motivation
 
-#The problems: 
-Anecdote: It can be annoying when you are studying in a library and you're the only one left all alone. Most smart home areas use PIR sensors which rely on infrared light from detecting moving heat radiation. But what if you are not actively moving and practicing exam problems? PIR doesnt detect a person still in the room and turns off the lights. Have you ever had a moment when you sat in a toilet stall and got carried away reading an interesting artical and all of a sudden the lights turn off? That is because of outdated PIR sensors! After some research I discovered mmWave sensors which send out mm wavelength waves ranging from 30 to 300 Ghz. These can detect micromovements like breathing, blinking or even simple twitching. This technology allowed me to control and keep on lights while still implementing energy savings when no one is actually in a room. 
-I problem I had was coming up with a project, I used Esp32, TFT SPI screens, I2C sensors, networking protocols, Apis, pcb design. I wanted to combine all of my knowledge of these technologies together and solve my problem while also expanding my knwoledge with other technologies like matter and thread protocol and doing this through practical problem solving and research. 
+Many smart home lighting systems use PIR motion sensors, which mainly detect changes in infrared radiation caused by movement. This can be unreliable when a person is sitting still, for example while studying or working, because the system may incorrectly assume the room is empty and turn the lights off.
+
+This project explores a more reliable room-monitoring system using mmWave human presence detection. Unlike PIR sensors, mmWave radar can detect small movements, including micro-movements from a stationary person. This makes it more suitable for presence-based lighting, room monitoring, and basic alarm features.
+
+The project also provided an opportunity to combine several areas of Computer Engineering, including embedded programming, PCB design, sensor integration, touchscreen UI development, MQTT communication, ThingsBoard dashboards, and Matter-over-Thread smart home experimentation.
+
+## Overview
 
 The **Smart Home Panel** is an embedded IoT system designed to monitor room conditions, detect human presence, display live sensor data on a touchscreen interface, and trigger basic smart home automation.
 
@@ -49,23 +53,6 @@ A secondary Matter-over-Thread subsystem was also tested using an ESP32-H2 as a 
 
 ---
 
-## Main Components
-
-| Component | Purpose |
-|---|---|
-| ESP32-S3 | Main controller for the Smart Panel |
-| ESP32-H2 Zero | Matter-over-Thread coprocessor / light device |
-| ESP32-C6 | Thread Border Router |
-| ILI9488 / ST7796 TFT Touchscreen | Local graphical user interface |
-| AHT20 | Temperature and humidity sensing |
-| BMP280 | Atmospheric pressure sensing |
-| BH1750 | Ambient light sensing |
-| SGP40 | Air quality / VOC index sensing |
-| RD-03D mmWave Radar | Human presence detection |
-| ThingsBoard | IoT dashboard, telemetry storage, alarms, and rule chains |
-| ESP32-S3 Light Device | Remote light device controlled using RPC |
-
----
 
 ## What the System Currently Does
 
@@ -143,6 +130,24 @@ The Matter subsystem currently works as a separate demonstration. Full communica
 
 A custom PCB was designed to connect the ESP32-S3, sensors, display, buzzer, buck converter power circuitry, and expansion headers.
 
+## Main Components
+
+| Component | Purpose |
+|---|---|
+| ESP32-S3 | Main controller for the Smart Panel |
+| ESP32-H2 Zero | Matter-over-Thread coprocessor / light device |
+| ESP32-C6 | Thread Border Router |
+| ILI9488 / ST7796 TFT Touchscreen | Local graphical user interface |
+| AHT20 | Temperature and humidity sensing |
+| BMP280 | Atmospheric pressure sensing |
+| BH1750 | Ambient light sensing |
+| SGP40 | Air quality / VOC index sensing |
+| RD-03D mmWave Radar | Human presence detection |
+| ThingsBoard | IoT dashboard, telemetry storage, alarms, and rule chains |
+| ESP32-S3 Light Device | Remote light device controlled using RPC |
+
+---
+
 The system uses several communication protocols:
 
 | Protocol | Used For |
@@ -154,6 +159,14 @@ The system uses several communication protocols:
 | Thread | Matter smart home communication |
 
 ---
+
+## Software Design
+
+The Smart Panel firmware was designed around a non-blocking service-loop approach. Instead of using long `delay()` calls, the main loop repeatedly updates each subsystem when it is due to run. This allows the touchscreen interface to stay responsive while the ESP32-S3 also reads sensors, checks the mmWave radar, updates the alarm logic, maintains Wi-Fi/MQTT communication, and sends telemetry to ThingsBoard.
+
+The project does not currently use a custom RTOS task structure. Although the ESP32 runs on FreeRTOS internally, the application logic is mainly organised as repeated service functions inside the Arduino `loop()`. I opted for this because it kept the prototype development faster and debugging easier. A future version could separate the display, sensor reading, MQTT communication, and alarm handling into dedicated FreeRTOS tasks.
+
+The firmware is planned to be modularised into separate files for display handling, sensor services, cloud communication, shared data, configuration, and secrets. This makes the project easier to maintain compared to keeping all logic inside one large sketch.
 
 ## Enclosure Design
 
@@ -170,5 +183,8 @@ The enclosure was designed as a prototype and would need further refinement for 
 ![Light and OTBR Enclosure](images/Light_OTBR_Enclosure.png)
 
 A separate enclosure was designed for the light device and Thread Border Router hardware. This helped separate the main sensor panel from the smart home actuation and Thread testing hardware.
+
+Acknowledgements:
+While I didn't get the project to the level that I was initially hoping, I did manage to solve my problem of lights turning off when still present in a room, receiving alarms if someone occupies a room, room health monitoring and alerts. I learned a lot from this project. I realized how important project design and careful consideration are. Throughout the actual implementation of the project hardware I had unexpected issues like when I connected all my peripherals to my Esp32S3 devkit, my display was experiencing brownouts due to unstable current spikes in wifi / dips from the Esp32S3 voltage regulator. I decided to use a Buck Step down Converter in order to convert Higher voltages ranging from 12-5V to a stable 5V output. I read datasheets on how to implement one on a pcb and designed one accordingly with the specs provided by the datasheets, the ic module I used was the "name of ic" , it was suitable because it was capable of taking in 12V and stepping it down to 5V... I decided to use a buck converter because these are more power efficient compared to voltage regulators which release enerhy through heat when under high load. I didn't want my device to overheat and potentially catch fire considering that I was connecting many sensors and display with touch support. There were many problems throughout this project that I overcame, one noticable one was when I got my pcb manufactured I had no idea that the charge up time of the Buck converter circuit would cause my main Esp32S3 to not be able to start up correctly. 
 
 ---
