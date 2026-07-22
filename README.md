@@ -4,60 +4,25 @@
 
 ## Overview
 
+#The problems: 
+Anecdote: It can be annoying when you are studying in a library and you're the only one left all alone. Most smart home areas use PIR sensors which rely on infrared light from detecting moving heat radiation. But what if you are not actively moving and practicing exam problems? PIR doesnt detect a person still in the room and turns off the lights. Have you ever had a moment when you sat in a toilet stall and got carried away reading an interesting artical and all of a sudden the lights turn off? That is because of outdated PIR sensors! After some research I discovered mmWave sensors which send out mm wavelength waves ranging from 30 to 300 Ghz. These can detect micromovements like breathing, blinking or even simple twitching. This technology allowed me to control and keep on lights while still implementing energy savings when no one is actually in a room. 
+I problem I had was coming up with a project, I used Esp32, TFT SPI screens, I2C sensors, networking protocols, Apis, pcb design. I wanted to combine all of my knowledge of these technologies together and solve my problem while also expanding my knwoledge with other technologies like matter and thread protocol and doing this through practical problem solving and research. 
+
 The **Smart Home Panel** is an embedded IoT system designed to monitor room conditions, detect human presence, display live sensor data on a touchscreen interface, and trigger basic smart home automation.
 
-The project combines:
+Currently the project combines:
 
 - Environmental sensing
 - Human presence detection
 - Local touchscreen interaction
 - Cloud telemetry using ThingsBoard
-- MQTT-based automation
-- Experimental Matter-over-Thread smart home integration
-
-This project was developed as part of my **3rd Year Computer Engineering project** and demonstrates practical experience with embedded systems, IoT platforms, PCB design, cloud dashboards, and modern smart home technologies.
+- MQTT-based automation integrated with Thingsboard Rule Chains
+- Basic Matter-over-Thread smart home integration (Work in progress)
 
 ---
 
 ---
 
-## Background: Key Technologies
-
-### What is ThingsBoard?
-
-**ThingsBoard** is the IoT platform used as the backend for this project. It receives sensor telemetry from the Smart Panel using MQTT and displays the data on dashboards. It is also used for alarms, email alerts, rule chains, and RPC commands to control the ESP32-S3 light device.
-
----
-
-### What is MQTT?
-
-**MQTT** is a lightweight communication protocol commonly used in IoT systems. In this project, the Smart Panel publishes sensor readings to ThingsBoard, while ThingsBoard uses RPC messages to control the light device. MQTT was chosen because it is efficient, simple to use with ESP32 devices, and well supported by ThingsBoard.
-
----
-
-### What is Thread?
-
-**Thread** is a low-power wireless networking protocol for smart home devices. It allows compatible devices to form a mesh network instead of relying only on Wi-Fi. In this project, Thread was explored using an ESP32-H2 Matter light device and an ESP32-C6 Thread Border Router.
-
----
-
-### What is Matter?
-
-**Matter** is a smart home standard designed to make devices work across different ecosystems such as Amazon Alexa, Google Home, Apple Home, and SmartThings. In this project, Matter was tested using Espressif’s ESP-Matter SDK, with the ESP32-H2 configured as a Matter-over-Thread light device.
-
----
-
-### Why is a Thread Border Router needed?
-
-A **Thread Border Router** connects Thread devices to the wider network, such as Wi-Fi or Ethernet. Thread devices do not connect directly to a normal Wi-Fi router, so the border router acts as the bridge. In this project, the ESP32-C6 was used for this role.
-
----
-
-### Do I need Amazon Alexa for Thread or Matter?
-
-Amazon Alexa is not required, but it can act as a **Matter controller**. A Matter controller is used to commission and control Matter devices. In this project, Alexa was used because it provided a practical way to test the ESP32-H2 Matter light device. Alternatives include Google Home, Apple Home, SmartThings, a Raspberry Pi running Matter controller software, or ESP32 Matter controller examples.
-
----
 
 ## Project Aim
 
