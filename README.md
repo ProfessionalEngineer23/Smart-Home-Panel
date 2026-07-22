@@ -168,6 +168,12 @@ The project does not currently use a custom RTOS task structure. Although the ES
 
 The firmware is planned to be modularised into separate files for display handling, sensor services, cloud communication, shared data, configuration, and secrets. This makes the project easier to maintain compared to keeping all logic inside one large sketch.
 
+## Firmware Flowchart:
+
+## State Chart:
+
+## Thingsboard Rule Chain:
+
 ## Enclosure Design
 
 ### Smart Panel Enclosure
