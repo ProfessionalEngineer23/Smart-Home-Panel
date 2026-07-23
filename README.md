@@ -25,7 +25,6 @@
 - [Enclosure Design](#enclosure-design)
 - [Current Project Status](#current-project-status)
 - [Future Work](#future-work)
-- [Engineering Reflection and Lessons Learned](#engineering-reflection-and-lessons-learned)
 
 ---
 
@@ -407,22 +406,3 @@ Planned improvements include:
 - Add more smart home features such as voice control or additional sensors
 
 ---
-
-## Engineering Reflection and Lessons Learned
-
-This project did not reach every feature that was originally planned, but it successfully demonstrated the main idea: a room-monitoring panel that can detect human presence, display live room conditions, send telemetry to ThingsBoard, trigger alerts, and control a light device through cloud-side automation.
-
-One of the biggest lessons from this project was the importance of power design in embedded systems. During early testing, the display experienced brownouts when multiple peripherals were connected to the ESP32-S3. This was likely caused by current spikes from Wi-Fi activity and the limited current available from the development board’s regulator. To improve stability, a buck converter was added to step down a higher input voltage to a stable 5V rail for the system.
-
-The PCB design stage also showed that hardware problems cannot always be solved in software. After the PCB was manufactured, the slow ramp-up time of the buck converter caused startup issues with the ESP32-S3. This highlighted the need to consider power sequencing, reset behaviour, and startup conditions earlier in the design process.
-
-Key lessons learned from this project include:
-
-- Power supply design is critical when combining displays, sensors, Wi-Fi, and other peripherals.
-- Hardware should be tested in stages before integrating the full system.
-- PCB design requires careful checking of power rails, reset circuits, and component datasheets.
-- A smaller working MVP is better than an unfinished system with too many planned features.
-- Cloud automation with ThingsBoard made the project easier to extend without adding too much complexity to the ESP32 firmware.
-- Matter and Thread are powerful smart home technologies, but they require more development time than expected.
-
-Overall, this project was a valuable learning experience in embedded systems, IoT communication, PCB design, user interface development, and practical engineering problem solving.
