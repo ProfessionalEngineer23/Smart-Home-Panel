@@ -124,20 +124,25 @@ The Matter subsystem currently works as a separate demonstration. Full communica
 
 ---
 
-# System_Sequence_Diagram
-![System_Sequence_Diagram](images/System_Sequence_Diagram.jpg)
+## System Sequence Diagram
+
+![System Sequence Diagram](images/System_Sequence_Diagram.jpg)
+
+The sequence diagram shows how the Smart Panel communicates with the sensors, mmWave radar, ThingsBoard, the rule chain, the light device, and the SMTP email service. The Smart Panel does not directly control the light. Instead, it sends telemetry to ThingsBoard, and the ThingsBoard rule chain decides whether the light should turn on or off.
+
+---
 
 ## Hardware Design
 
 ![PCB Layout](images/PCB.jpg)
 
-<img width="1292" height="916" alt="image" src="https://github.com/user-attachments/assets/1390bd56-32ba-431b-892c-bc66b8cec42b" />
+<img width="1292" height="916" alt="Smart Panel Schematic" src="https://github.com/user-attachments/assets/1390bd56-32ba-431b-892c-bc66b8cec42b" />
 
-<img width="1292" height="916" alt="image" src="https://github.com/user-attachments/assets/00727843-fd7e-4299-ba27-825f9a194aaa" />
+<img width="1292" height="916" alt="Smart Panel PCB Layout" src="https://github.com/user-attachments/assets/00727843-fd7e-4299-ba27-825f9a194aaa" />
 
-A custom PCB was designed to connect the ESP32-S3, sensors, display, buzzer, buck converter power circuitry, and expansion headers.
+A custom PCB was designed to connect the ESP32-S3, display, sensors, buzzer, buck converter power circuitry, and expansion headers. The PCB helped reduce wiring complexity compared to the early breadboard prototype and made the project closer to a complete embedded system.
 
-## Main Components
+### Main Components
 
 | Component | Purpose |
 |---|---|
@@ -153,14 +158,12 @@ A custom PCB was designed to connect the ESP32-S3, sensors, display, buzzer, buc
 | ThingsBoard | IoT dashboard, telemetry storage, alarms, and rule chains |
 | ESP32-S3 Light Device | Remote light device controlled using RPC |
 
----
-
-The system uses several communication protocols:
+### Communication Interfaces
 
 | Protocol | Used For |
 |---|---|
 | SPI | TFT display and touch controller |
-| I2C | AHT20, BMP280, BH1750, SGP40 sensors |
+| I2C | AHT20, BMP280, BH1750, and SGP40 sensors |
 | UART | RD-03D radar and ESP32-H2 coprocessor communication |
 | Wi-Fi | MQTT communication with ThingsBoard |
 | Thread | Matter smart home communication |
@@ -169,29 +172,39 @@ The system uses several communication protocols:
 
 ## Software Design
 
-The Smart Panel firmware was designed around a non-blocking service-loop approach. Instead of using long `delay()` calls, the main loop repeatedly updates each subsystem when it is due to run. This allows the touchscreen interface to stay responsive while the ESP32-S3 also reads sensors, checks the mmWave radar, updates the alarm logic, maintains Wi-Fi/MQTT communication, and sends telemetry to ThingsBoard.
+The Smart Panel firmware was designed around a non-blocking service-loop approach. Instead of using long `delay()` calls, the main loop repeatedly updates each subsystem when it is due to run. This keeps the touchscreen responsive while the ESP32-S3 reads sensors, checks the mmWave radar, updates alarm logic, maintains Wi-Fi/MQTT communication, and sends telemetry to ThingsBoard.
 
-The project does not currently use a custom RTOS task structure. Although the ESP32 runs on FreeRTOS internally, the application logic is mainly organised as repeated service functions inside the Arduino `loop()`. I opted for this because it kept the prototype development faster and debugging easier. A future version could separate the display, sensor reading, MQTT communication, and alarm handling into dedicated FreeRTOS tasks.
+The project does not currently use a custom RTOS task structure. Although the ESP32 runs on FreeRTOS internally, the application logic is mainly organised as repeated service functions inside the Arduino `loop()`. This approach kept the prototype easier to develop and debug. A future version could separate the display, sensor reading, MQTT communication, and alarm handling into dedicated FreeRTOS tasks.
 
-The firmware is planned to be modularised into separate files for display handling, sensor services, cloud communication, shared data, configuration, and secrets. This makes the project easier to maintain compared to keeping all logic inside one large sketch.
+The firmware is planned to be modularised into separate files for display handling, sensor services, cloud communication, shared data, configuration, and secrets. This would make the codebase easier to maintain compared to keeping all logic inside one large sketch.
 
-## Firmware Flowchart:
+### Firmware Flowchart
+
 ![Firmware Flowchart](images/Smart_Panel_Flow.jpg)
-## State Chart:
+
+### State Chart
+
 ![State Chart](images/Smart_Panel_State.jpg)
-## Thingsboard Rule Chain:
-![Root Rule Chain](images/Root_Rule_Chain.png)
-![Light Control Rule Chain](images/Light_Control_Rule_Chain.png)
-![Thingsboard Alarms and SMTP Rule Chain](images/Thingsboard_Alarms_and_SMTP_Rule_Chain.png)
+
+### ThingsBoard Rule Chains
+
+![Root Rule Chain](images/Root Rule Chain.png)
+
+![Light Control Rule Chain](images/Light Control Rule Chain.png)
+
+![ThingsBoard Alarms and SMTP Rule Chain](images/Thingsboard Alarms and SMTP Rule Chain.png)
+
+The rule chains handle the cloud-side automation. When the Smart Panel sends new telemetry, ThingsBoard checks the human presence value. If presence is detected, the rule chain can create an alarm, send an email alert, and send an RPC command to turn on the light device. If no presence is detected, the light can be turned off.
+
+---
+
 ## Enclosure Design
 
 ### Smart Panel Enclosure
 
 ![Smart Panel Enclosure](images/Smart_Panel_Enclosure.png)
 
-The Smart Panel enclosure was designed to house the touchscreen, ESP32-S3, sensors, radar module, buzzer, and internal wiring.
-
-The enclosure was designed as a prototype and would need further refinement for a more professional or manufacturable version.
+The Smart Panel enclosure was designed to house the touchscreen, ESP32-S3, sensors, radar module, buzzer, and internal wiring. The current enclosure is a prototype and would need further refinement for a more professional or manufacturable version.
 
 ### Light / OTBR Enclosure
 
@@ -199,7 +212,23 @@ The enclosure was designed as a prototype and would need further refinement for 
 
 A separate enclosure was designed for the light device and Thread Border Router hardware. This helped separate the main sensor panel from the smart home actuation and Thread testing hardware.
 
-Acknowledgements:
-While I didn't get the project to the level that I was initially hoping, I did manage to solve my problem of lights turning off when still present in a room, receiving alarms if someone occupies a room, room health monitoring and alerts. I learned a lot from this project. I realized how important project design and careful consideration are. Throughout the actual implementation of the project hardware I had unexpected issues like when I connected all my peripherals to my Esp32S3 devkit, my display was experiencing brownouts due to unstable current spikes in wifi / dips from the Esp32S3 voltage regulator. I decided to use a Buck Step down Converter in order to convert Higher voltages ranging from 12-5V to a stable 5V output. I read datasheets on how to implement one on a pcb and designed one accordingly with the specs provided by the datasheets, the ic module I used was the "name of ic" , it was suitable because it was capable of taking in 12V and stepping it down to 5V... I decided to use a buck converter because these are more power efficient compared to voltage regulators which release enerhy through heat when under high load. I didn't want my device to overheat and potentially catch fire considering that I was connecting many sensors and display with touch support. There were many problems throughout this project that I overcame, one noticable one was when I got my pcb manufactured I had no idea that the charge up time of the Buck converter circuit would cause my main Esp32S3 to not be able to start up correctly. 
-
 ---
+
+## Engineering Reflection and Lessons Learned
+
+This project did not reach every feature that was originally planned, but it successfully demonstrated the main idea: a room-monitoring panel that can detect human presence, display live room conditions, send telemetry to ThingsBoard, trigger alerts, and control a light device through cloud-side automation.
+
+One of the biggest lessons from this project was the importance of power design in embedded systems. During early testing, the display experienced brownouts when multiple peripherals were connected to the ESP32-S3. This was likely caused by current spikes from Wi-Fi activity and the limited current available from the development board’s regulator. To improve stability, a buck converter was added to step down a higher input voltage to a stable 5V rail for the system.
+
+The PCB design stage also showed that hardware problems cannot always be solved in software. After the PCB was manufactured, the slow ramp-up time of the buck converter caused startup issues with the ESP32-S3. This highlighted the need to consider power sequencing, reset behaviour, and startup conditions earlier in the design process.
+
+Key lessons learned from this project include:
+
+- Power supply design is critical when combining displays, sensors, Wi-Fi, and other peripherals.
+- Hardware should be tested in stages before integrating the full system.
+- PCB design requires careful checking of power rails, reset circuits, and component datasheets.
+- A smaller working MVP is better than an unfinished system with too many planned features.
+- Cloud automation with ThingsBoard made the project easier to extend without adding too much complexity to the ESP32 firmware.
+- Matter and Thread are powerful smart home technologies, but they require more development time than expected.
+
+Overall, this project was a valuable learning experience in embedded systems, IoT communication, PCB design, user interface development, and practical engineering problem solving.
