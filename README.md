@@ -180,9 +180,9 @@ The firmware is planned to be modularised into separate files for display handli
 ## State Chart:
 ![State Chart](images/Smart_Panel_State.jpg)
 ## Thingsboard Rule Chain:
-![Root Rule Chain](images/Root Rule Chain.png)
-![Light Control Rule Chain](images/Light Control Rule Chain.png)
-![Thingsboard Alarms and SMTP Rule Chain](images/Thingsboard Alarms and SMTP Rule Chain.png)
+![Root Rule Chain](images/Root_Rule_Chain.png)
+![Light Control Rule Chain](images/Light_Control_Rule_Chain.png)
+![Thingsboard Alarms and SMTP Rule Chain](images/Thingsboard_Alarms_and_SMTP_Rule_Chain.png)
 ## Enclosure Design
 
 ### Smart Panel Enclosure
