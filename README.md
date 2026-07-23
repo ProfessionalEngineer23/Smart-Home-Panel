@@ -16,7 +16,6 @@
 - [Problem Statement and Motivation](#problem-statement-and-motivation)
 - [Project Aim](#project-aim)
 - [System Architecture](#system-architecture)
-- [Background: Key Technologies](#background-key-technologies)
 - [System Functionality](#system-functionality)
 - [System Sequence Diagram](#system-sequence-diagram)
 - [Hardware Design](#hardware-design)
@@ -76,36 +75,6 @@ The system is built around a central **ESP32-S3 Smart Panel**. This device reads
 ThingsBoard is used to store telemetry, display dashboards, generate alarms, send email notifications, and trigger automation rules. A separate ESP32-S3 light device subscribes to RPC commands from ThingsBoard and can be controlled automatically based on human presence detection.
 
 A secondary Matter-over-Thread subsystem was also tested using an ESP32-H2 as a Matter light device and an ESP32-C6 as a Thread Border Router. This Matter subsystem currently works as a separate demonstration, with full integration planned as future work.
-
----
-
-## Background: Key Technologies
-
-### What is ThingsBoard?
-
-**ThingsBoard** is the IoT platform used as the backend for this project. It receives sensor telemetry from the Smart Panel using MQTT and displays the data on dashboards. It is also used for alarms, email alerts, rule chains, and RPC commands to control the ESP32-S3 light device.
-
-### What is MQTT?
-
-**MQTT** is a lightweight communication protocol commonly used in IoT systems. In this project, the Smart Panel publishes sensor readings to ThingsBoard, while ThingsBoard uses RPC messages to control the light device. MQTT was chosen because it is efficient, simple to use with ESP32 devices, and well supported by ThingsBoard.
-
-### What is Thread?
-
-**Thread** is a low-power wireless networking protocol for smart home devices. It allows compatible devices to form a mesh network instead of relying only on Wi-Fi. In this project, Thread was explored using an ESP32-H2 Matter light device and an ESP32-C6 Thread Border Router.
-
-### What is Matter?
-
-**Matter** is a smart home standard designed to make devices work across different ecosystems such as Amazon Alexa, Google Home, Apple Home, and SmartThings. In this project, Matter was tested using Espressif’s ESP-Matter SDK, with the ESP32-H2 configured as a Matter-over-Thread light device.
-
-### Why is a Thread Border Router needed?
-
-A **Thread Border Router** connects Thread devices to the wider network, such as Wi-Fi or Ethernet. Thread devices do not connect directly to a normal Wi-Fi router, so the border router acts as the bridge. In this project, the ESP32-C6 was used for this role.
-
-### Do I need Amazon Alexa for Thread or Matter?
-
-Amazon Alexa is not required, but it can act as a **Matter controller**. A Matter controller is used to commission and control Matter devices. In this project, Alexa was used because it provided a practical way to test the ESP32-H2 Matter light device. Alternatives include Google Home, Apple Home, SmartThings, a Raspberry Pi running Matter controller software, or ESP32 Matter controller examples.
-
----
 
 ## System Functionality
 
