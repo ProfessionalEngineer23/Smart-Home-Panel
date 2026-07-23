@@ -89,6 +89,10 @@ This makes the system more suitable for smart home automation, where a person ma
 
 ![ThingsBoard Dashboard](images/Thingsboard_Dashboard.jpg)
 
+![Thingsboard Smart Panel Dashboard](images/Thingsboard Smart Panel Dashboard.png)
+
+![Light Device Dashboard](images/Light Device Dashboard.png)
+
 ThingsBoard is used as the IoT backend for the project. The Smart Panel sends telemetry to ThingsBoard using MQTT.
 
 ThingsBoard provides:
@@ -119,6 +123,9 @@ The project also explores Matter-over-Thread using:
 The Matter subsystem currently works as a separate demonstration. Full communication between the ESP32-S3 Smart Panel and ESP32-H2 Matter coprocessor is planned as future work.
 
 ---
+
+# System_Sequence_Diagram
+![System_Sequence_Diagram](images/System_Sequence_Diagram.jpg)
 
 ## Hardware Design
 
@@ -169,11 +176,13 @@ The project does not currently use a custom RTOS task structure. Although the ES
 The firmware is planned to be modularised into separate files for display handling, sensor services, cloud communication, shared data, configuration, and secrets. This makes the project easier to maintain compared to keeping all logic inside one large sketch.
 
 ## Firmware Flowchart:
-
+![Firmware Flowchart](images/Smart_Panel_Flow.jpg)
 ## State Chart:
-
+![State Chart](images/Smart_Panel_State.jpg)
 ## Thingsboard Rule Chain:
-
+![Root Rule Chain](images/Root Rule Chain.png)
+![Light Control Rule Chain](images/Light Control Rule Chain.png)
+![Thingsboard Alarms and SMTP Rule Chain](images/Thingsboard Alarms and SMTP Rule Chain.png)
 ## Enclosure Design
 
 ### Smart Panel Enclosure
