@@ -2,6 +2,8 @@
 // Hardware:
 // Esp32S3 Devkit C
 // Used to simulate a light device utilizing the LED on GPIO 38
+// Has rpc handler functions for controlling led state and mode, allows to set led to blinking mode/ turn on/off.
+// Esp32S3 subscribes to Thingsboard via mqtt. Thingsboard controls if LED turns on/off based on human presence detection value 
 // Based on ThingsboardClientSDK example found here:
 // https://github.com/thingsboard/thingsboard-client-sdk/blob/master/examples/0010-esp8266_esp32_rpc/0010-esp8266_esp32_rpc.ino?utm_source=chatgpt.com
 
