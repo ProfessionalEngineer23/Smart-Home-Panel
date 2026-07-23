@@ -1,3 +1,10 @@
+// Thingsboad Light device using RPC through MQTT and Thingsboard 
+// Hardware:
+// Esp32S3 Devkit C
+// Used to simulate a light device utilizing the LED on GPIO 38
+// Based on ThingsboardClientSDK example found here:
+// https://github.com/thingsboard/thingsboard-client-sdk/blob/master/examples/0010-esp8266_esp32_rpc/0010-esp8266_esp32_rpc.ino?utm_source=chatgpt.com
+
 #if defined(ESP8266)
 #include <ESP8266WiFi.h>
 #define THINGSBOARD_ENABLE_PROGMEM 0
@@ -254,8 +261,8 @@ const Attribute_Request_Callback<MAX_ATTRIBUTES> attribute_client_request_callba
 void connectThingsBoard() {
   Serial.print("Connecting to ThingsBoard: ");
   Serial.print(THINGSBOARD_SERVER);
-  Serial.print(" with token ");
-  Serial.println(TOKEN);
+  //Serial.print(" with token ");
+  //Serial.println(TOKEN);
 
   if (!tb.connect(THINGSBOARD_SERVER, TOKEN, THINGSBOARD_PORT)) {
     Serial.println("Failed to connect to ThingsBoard");
