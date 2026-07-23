@@ -89,7 +89,7 @@ This makes the system more suitable for smart home automation, where a person ma
 
 ![ThingsBoard Dashboard](images/Thingsboard_Dashboard.jpg)
 
-![Thingsboard Smart Panel Dashboard](images/Thingsboard Smart Panel Dashboard.png)
+![Thingsboard_Smart_Panel_Dashboard](images/Thingsboard_Smart_Panel_Dashboard.png)
 
 ![Light Device Dashboard](images/Light Device Dashboard.png)
 
