@@ -188,11 +188,11 @@ The firmware is planned to be modularised into separate files for display handli
 
 ### ThingsBoard Rule Chains
 
-![Root Rule Chain](images/Root Rule Chain.png)
+![Root_Rule_Chain](images/Root_Rule_Chain.png)
 
-![Light Control Rule Chain](images/Light Control Rule Chain.png)
+![Light_Control_Rule_Chain](images/Light_Control_Rule_Chain.png)
 
-![ThingsBoard Alarms and SMTP Rule Chain](images/Thingsboard Alarms and SMTP Rule Chain.png)
+![ThingsBoard_Alarms_and_SMTP_Rule_Chain](images/Thingsboard_Alarms_and_SMTP_Rule_Chain.png)
 
 The rule chains handle the cloud-side automation. When the Smart Panel sends new telemetry, ThingsBoard checks the human presence value. If presence is detected, the rule chain can create an alarm, send an email alert, and send an RPC command to turn on the light device. If no presence is detected, the light can be turned off.
 
