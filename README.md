@@ -364,6 +364,7 @@ A separate enclosure was designed for the light device and Thread Border Router 
 
 Planned improvements include:
 
+- Reliability and quality of the current system/ finding issues
 - Add UART communication between the ESP32-S3 and ESP32-H2
 - Send Smart Panel sensor states to the Matter subsystem
 - Improve the LVGL interface design
