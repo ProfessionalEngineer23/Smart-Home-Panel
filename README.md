@@ -91,7 +91,7 @@ This makes the system more suitable for smart home automation, where a person ma
 
 ![Thingsboard_Smart_Panel_Dashboard](images/Thingsboard_Smart_Panel_Dashboard.png)
 
-![Light Device Dashboard](images/Light Device Dashboard.png)
+![Light Device Dashboard](images/Light_Device_Dashboard.png)
 
 ThingsBoard is used as the IoT backend for the project. The Smart Panel sends telemetry to ThingsBoard using MQTT.
 
