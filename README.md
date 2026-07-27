@@ -39,11 +39,11 @@ This project was developed as part of my **3rd Year Computer Engineering project
 
 ## Problem Statement and Motivation
 
-Many smart home lighting systems use PIR motion sensors, which mainly detect changes in infrared radiation caused by movement. This can be unreliable when a person is sitting still, for example while studying or working, because the system may incorrectly assume the room is empty and turn the lights off.
+Many smart home lighting systems use PIR motion sensors, which mainly detect changes in infrared radiation caused by movement. This can be unreliable when a person is sitting still, for example while studying or working, because the system may incorrectly assume that the room is empty and turn the lights off.
 
 This project explores a more reliable room-monitoring system using mmWave human presence detection. Unlike PIR sensors, mmWave radar can detect small movements, including micro-movements from a stationary person. This makes it more suitable for presence-based lighting, room monitoring, and basic alarm features.
 
-The project also provided an opportunity to combine several areas of Computer Engineering, including embedded programming, PCB design, sensor communication, touchscreen UI development, MQTT communication, ThingsBoard dashboards, and Matter-over-Thread experimentation.
+The project also gave me the opportunity to explore and combine several technologies into one working embedded system. This included sensor integration, touchscreen UI development, web-based dashboards, MQTT communication, ThingsBoard rule chains, and *Matter-over-Thread experimentation. It was decided to keep main features within one Smart Panel device to stay realistic with the given time/ make the system easier to prototype.
 
 ---
 
