@@ -156,7 +156,7 @@ ThingsBoard provides:
 - Rule chain automation
 - RPC control of the light device
 
-A rule chain was created so that when human presence is detected, ThingsBoard sends an RPC command to the ESP32-S3 light device to turn the light on. When presence is no longer detected, the light can be turned off.
+A rule chain was created so that when human presence is detected, ThingsBoard sends an RPC command to the ESP32-S3 light device to turn the light on. When presence is no longer detected, the light automatically turns off. The light device can be manually turned off using the light device dashboard if the lights were left on due to false presence detection from a pet for example. 
 
 ---
 
