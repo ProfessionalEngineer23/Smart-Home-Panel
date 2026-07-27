@@ -127,6 +127,8 @@ The interface was built using **LVGL**, allowing the panel to show live readings
 
 ### Human Presence Detection
 
+*Demo video yet to come (Once I get my project back and a chance to film a video without me wearing my boxers)
+
 <p align="center">
   <img src="images/Room_Testing.jpg" alt="Room Testing with Smart Panel" width="750">
 </p>
