@@ -39,24 +39,46 @@ This project was developed as part of my **3rd Year Computer Engineering project
 
 ## Problem Statement and Motivation
 
-Many smart home lighting systems use PIR motion sensors, which mainly detect changes in infrared radiation caused by movement. This can be unreliable when a person is sitting still, for example while studying or working, because the system may incorrectly assume that the room is empty and turn the lights off.
+Many smart home lighting systems use PIR motion sensors, which mainly detect changes in infrared radiation caused by movement. This can be unreliable when someone is sitting still. For example, while I was studying in the library, I was sitting behind a personal study desk and the lights suddenly turned off. After looking into it, I realised this was likely due to how PIR sensors work and how they were positioned in the room.
 
-This project explores a more reliable room-monitoring system using mmWave human presence detection. Unlike PIR sensors, mmWave radar can detect small movements, including micro-movements from a stationary person. This makes it more suitable for presence-based lighting, room monitoring, and basic alarm features.
+This personally offended me. I thought to myself, “even the motion sensors do not notice me anymore.” Jokes aside, this gave me the idea to work on a project that solves a problem I experienced while also improving my understanding of room monitoring systems.
 
-The project also gave me the opportunity to explore and combine several technologies into one working embedded system. This included sensor integration, touchscreen UI development, web-based dashboards, MQTT communication, ThingsBoard rule chains, and *Matter-over-Thread experimentation. It was decided to keep main features within one Smart Panel device to stay realistic with the given time/ make the system easier to prototype.
+Before choosing mmWave, I considered a few other approaches. One idea was to use microcontrollers with ultrasonic sensors to measure the distance between a desk and chair. If the distance was below a certain threshold, the system could assume someone was sitting there. However, this would be difficult to make reliable because ultrasonic sensors can be affected by clothing, soft materials, object placement, and room layout. I also considered load cells, but the cost per unit and daily wear would make that approach less practical.
+
+After some research, I discovered mmWave radar sensors. In simple terms, these sensors send out high-frequency radio waves and analyse the reflections that return. Using changes in the reflected signal, such as Doppler shift and phase changes, they can detect small micro-movements from a stationary person, such as breathing or slight body movement. This made mmWave sensing a more practical option for presence detection with wider coverage compared to PIR, ultrasonic sensors, or load cells.
+
+The proposed solution was a Smart Home Panel that uses mmWave human presence detection instead of relying only on PIR motion detection. This makes the system more suitable for presence-based lighting, room monitoring, and basic alarm features.
+
+This project also gave me the opportunity to combine several technologies into one working embedded system, including sensor integration, touchscreen UI development, web-based dashboards, MQTT communication, ThingsBoard rule chains, and Matter-over-Thread experimentation. This year I wanted to gain more exposure to different technolgies available. I decided to keep the main features inside one Smart Panel device to stay realistic with the project timeframe and make the system easier to prototype.
 
 ---
 
 ## Project Aim
 
-The aim of this project was to design and build a smart home panel capable of:
+The aim of this project was to design and build a prototype Smart Home Panel that can monitor room conditions, detect human presence, display live readings locally, and use the collected data to trigger basic smart home automation.
 
-- Measuring room temperature, humidity, pressure, light level, and air quality
-- Detecting human presence using mmWave radar
-- Displaying live readings on a local LVGL touchscreen UI
-- Sending telemetry to a ThingsBoard server using MQTT
-- Controlling a separate ESP32-S3 light device using ThingsBoard RPC
-- Demonstrating Matter-over-Thread device commissioning using an ESP32-H2 and ESP32-C6 Thread Border Router
+The system was designed to combine environmental sensing, mmWave presence detection, a touchscreen UI, ThingsBoard cloud telemetry, MQTT communication, RPC light control, and experimental Matter-over-Thread integration.
+
+---
+
+## Identified Project Requirements
+
+| Requirement | Description |
+|---|---|
+| Human presence detection | Detect whether a person is present in the room using an RD-03D mmWave radar sensor. |
+| Environmental monitoring | Measure temperature, humidity, pressure, light level, and air quality. |
+| Local display | Show live sensor readings on a touchscreen interface using LVGL. |
+| Remote telemetry | Send sensor data to ThingsBoard using MQTT so the readings can be viewed remotely. |
+| Presence-based light control | Use ThingsBoard rule chains to send RPC commands to a separate ESP32-S3 light device. |
+| Alerts and notifications | Generate an alarm and send an email alert when human presence is detected. |
+| Smart home experimentation | Demonstrate Matter-over-Thread commissioning using an ESP32-H2 Matter device and an ESP32-C6 Thread Border Router. |
+| Prototype integration | Keep the main monitoring features inside one Smart Panel device to reduce complexity and make the system easier to test. |
+
+---
+
+## Functional Summary
+
+The Smart Panel reads room sensor values, checks for human presence, updates the touchscreen UI, and publishes telemetry to ThingsBoard. ThingsBoard then processes the telemetry using rule chains. If presence is detected, the system can turn on the light device and send an email alert. If presence is no longer detected, the light can be turned off automatically.
 
 ---
 
